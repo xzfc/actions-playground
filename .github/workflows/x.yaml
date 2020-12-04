@@ -3,8 +3,8 @@ name: action-name
 on: push
 jobs:
   test:
-    name: ubuntu
-    runs-on: ubuntu-latest
+    name: windows
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v2
       - name: Setup tmate session
