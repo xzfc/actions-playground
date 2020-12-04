@@ -1,0 +1,14 @@
+---
+name: action-name
+on: push
+jobs:
+  test:
+    name: ubuntu
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+      - name: Sleep 3m
+        run: |
+          sleep 180
