@@ -1,0 +1,10 @@
+linters:
+  disable-all: true
+  enable:
+    - ineffassign
+issues:
+  exclude-rules:
+    - path: cmd/main.go
+      linters:
+        - ineffassign
+      text: "ineffectual assignment to a"
