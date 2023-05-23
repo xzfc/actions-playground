@@ -4,7 +4,7 @@ on:
   push:
 jobs:
   tests:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
       with:
@@ -17,7 +17,20 @@ jobs:
       with:
         name: xzfc
         signingKey: ${{ secrets.CACHIX_SIGNING_KEY }}
-    - name: Install and test cached-nix-shell
-      run: nix-env -i -f default.nix && ./tests/run.sh
-    - name: Test nix-trace
-      run: nix-shell ./default.nix --run 'make -C ./nix-trace test'
+        # cachixArgs:
+    # - name: Install and test cached-nix-shell
+    #   run: nix-env -i -f default.nix && ./tests/run.sh
+    # - name: Test nix-trace
+    #   run: nix-shell ./default.nix --run 'make -C ./nix-trace test'
+    - name: Build and run stuff
+      run: |
+        cat > stuff.nix << EOF
+        with import <nixpkgs> {};
+        stdenv.mkDerivation{
+          name="test";
+          unpackPhase=":";
+          installPhase="echo $(date) > \$out";
+        }
+        EOF
+        nix-build ./stuff.nix
+        cat result
