@@ -1,0 +1,21 @@
+---
+name: Run tmate
+
+on:
+  workflow_dispatch:
+    inputs:
+      runs-on:
+        default: macos-latest
+        description: Runs on
+        required: true
+        type: string
+
+jobs:
+  tmate:
+    name: macos
+    runs-on: ${{ github.event.inputs.runs-on }}
+    steps:
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          limit-access-to-actor: true
