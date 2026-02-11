@@ -1,0 +1,76 @@
+---
+name: Inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+      boolean:
+        description: '[boolean description]'
+        type: boolean
+      boolean_required:
+        description: '[boolean_required description]'
+        required: true
+        type: boolean
+
+      choice:
+        default: bar
+        description: '[choice description]'
+        options:
+          - bar
+          - baz
+          - foo
+        required: true
+        type: choice
+      choice_required:
+        default: bar
+        description: '[choice_required description]'
+        options:
+          - foo
+          - bar
+          - baz
+        type: choice
+
+      environment:
+        description: '[environment description]'
+        type: environment
+      # environment_required:
+      #   description: '[environment_required description]'
+      #   required: true
+      #   type: environment
+
+      number:
+        default: 42
+        description: '[number description]'
+        type: number
+      number_required:
+        default: 42
+        description: '[number_required description]'
+        required: true
+        type: number
+
+      string:
+        default: hello
+        description: '[string description]'
+        type: string
+      string_required:
+        default: hello
+        description: '[string_required description]'
+        required: true
+        type: string
+
+jobs:
+  hello:
+    name: hello
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print inputs and types
+        env:
+          EVENT_INPUTS_JSON: ${{ toJSON(github.event.inputs) }}
+          INPUTS_JSON: ${{ toJSON(inputs) }}
+        run: |
+          echo "inputs context:"
+          jq . <<<"$INPUTS_JSON"
+
+          echo
+          echo "github.event.inputs context:"
+          jq . <<<"$EVENT_INPUTS_JSON"
